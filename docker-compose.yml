@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./run.py:/app/run.py
+    restart: on-failure
+    env_file:
+      - .env
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    restart: on-failure
+    depends_on:
+      - backend 
